@@ -14,7 +14,7 @@ export default new Vuex.Store({
     auth_request(state) {
       state.status = 'loading';
     },
-    auth_success(state, token, user) {
+    auth_success(state, { token, user }) {
       state.status = 'success';
       state.token = token;
       state.user = user;
@@ -28,6 +28,30 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    verifyToken({ commit }) {
+      return new Promise((resolve, reject) => {
+        commit('auth_request');
+        const token = localStorage.getItem('token');
+        axios({
+          url: 'http://localhost:5000/api/v1/verify-token',
+          data: token,
+          method: 'POST',
+        })
+          .then((res) => {
+            const user = res.data.user;
+
+            console.log(user, token);
+            commit('auth_success', { token, user });
+            resolve(res);
+          })
+          .catch((err) => {
+            commit('auth_error');
+            localStorage.removeItem('token');
+            reject(err);
+          });
+      });
+    },
+
     login({ commit }, user) {
       return new Promise((resolve, reject) => {
         commit('auth_request');
@@ -40,8 +64,8 @@ export default new Vuex.Store({
             const token = res.data.token;
             const user = res.data.user;
             localStorage.setItem('token', token);
-            axios.defaults.headers.common['Authorization'] = token;
-            commit('auth_success', token, user);
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            commit('auth_success', { token, user });
             resolve(res);
           })
           .catch((err) => {
@@ -56,7 +80,7 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         commit('auth_request');
         axios({
-          url: 'http://localhost:5000/api/v1/login',
+          url: 'http://localhost:5000/api/v1/register',
           data: user,
           method: 'POST',
         })
@@ -64,7 +88,7 @@ export default new Vuex.Store({
             const token = res.data.token;
             const user = res.data.user;
             localStorage.setItem('token', token);
-            axios.defaults.headers.common['Authorization'] = token;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             commit('auth_success', token, user);
             resolve(res);
           })

@@ -4,8 +4,8 @@
     <v-card-text>
       <v-form @submit.prevent="registerUser">
         <v-text-field prepend-icon="mdi-account-circle" v-model="username" label="Username"></v-text-field>
-        <v-text-field prepend-icon="mdi-mail" v-model="email" label="Email"></v-text-field>
-        <v-text-field prepend-icon="mdi-lock" v-model="password" label="Password"></v-text-field>
+        <v-text-field type="email" prepend-icon="mdi-mail" v-model="email" label="Email"></v-text-field>
+        <v-text-field type="password" prepend-icon="mdi-lock" v-model="password" label="Password"></v-text-field>
         <v-card-actions>
           <v-btn type="submit" color="info">Register</v-btn>
           <v-spacer></v-spacer>
@@ -27,8 +27,18 @@ export default {
     };
   },
   methods: {
-    registerUser() {
-      console.log("registering");
+    async registerUser() {
+      const data = {
+        username: this.username,
+        email: this.email,
+        password: this.password
+      };
+      try {
+        const response = await this.$store.dispatch("register", data);
+        console.log(response);
+      } catch (err) {
+        console.log(err);
+      }
     }
   }
 };

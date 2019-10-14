@@ -1,10 +1,12 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
+import store from './store';
 
 Vue.use(Router);
 
-export default new Router({
+let router = new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -14,13 +16,34 @@ export default new Router({
     {
       path: '/login',
       name: 'login',
-      component: () => import(/* webpackChunkName: "about" */ './views/Login.vue'),
+      component: () => import('./views/Login.vue'),
     },
 
     {
       path: '/register',
       name: 'register',
-      component: () => import(/* webpackChunkName: "about" */ './views/Register.vue'),
+      component: () => import('./views/Register.vue'),
+    },
+    {
+      path: '/secure',
+      name: 'secure',
+      component: () => import('./views/Secure.vue'),
+      meta: {
+        requiresAuth: true,
+      },
     },
   ],
 });
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (store.getters.isLoggedIn) {
+      next();
+      return;
+    }
+    next('/login');
+  } else {
+    next();
+  }
+});
+
+export default router;

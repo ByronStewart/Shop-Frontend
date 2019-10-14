@@ -26,12 +26,11 @@ export default {
   },
   methods: {
     async loginUser() {
-      const email = this.email;
-      const password = this.password;
+      let email = this.email;
+      let password = this.password;
       try {
-        await this.$store.dispatch("loginUser", { email, password });
+        await this.$store.dispatch("login", { email, password });
         this.$router.push("/");
-        console.log("made it");
       } catch (err) {
         console.log(err);
       }
