@@ -30,7 +30,7 @@ export default {
       let password = this.password;
       try {
         await this.$store.dispatch("login", { email, password });
-        this.$router.push("/");
+        this.$router.push("/products");
       } catch (err) {
         console.log(err);
       }

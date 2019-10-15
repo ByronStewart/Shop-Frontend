@@ -35,6 +35,7 @@ export default {
       };
       try {
         const response = await this.$store.dispatch("register", data);
+        this.$router.push('/login')
         console.log(response);
       } catch (err) {
         console.log(err);

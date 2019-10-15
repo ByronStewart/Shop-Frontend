@@ -7,6 +7,7 @@
     <v-btn outlined link to="/login">Login</v-btn>
     <v-btn outlined link to="/register">Register</v-btn>
     <v-btn outlined link to="/secure">Secure</v-btn>
+    <v-btn outlined link to="/products">products</v-btn>
     <v-btn outlined @click="logout">Logout</v-btn>
   </v-app-bar>
 </template>
@@ -17,6 +18,7 @@ export default {
   methods: {
     logout() {
       this.$store.dispatch("logout");
+      this.$router.push("/");
     }
   }
 };

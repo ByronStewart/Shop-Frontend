@@ -39,8 +39,6 @@ export default new Vuex.Store({
         })
           .then((res) => {
             const user = res.data.user;
-
-            console.log(user, token);
             commit('auth_success', { token, user });
             resolve(res);
           })

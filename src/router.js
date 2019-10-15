@@ -32,6 +32,22 @@ let router = new Router({
         requiresAuth: true,
       },
     },
+    {
+      path: '/products',
+      name: 'products',
+      component: () => import('./views/Products.vue'),
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/product/:id',
+      name: 'product',
+      component: () => import('./views/Product.vue'),
+      meta: {
+        requiresAuth: true,
+      },
+    },
   ],
 });
 router.beforeEach((to, from, next) => {
