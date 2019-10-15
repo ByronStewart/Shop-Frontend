@@ -25,9 +25,9 @@ let router = new Router({
       component: () => import('./views/Register.vue'),
     },
     {
-      path: '/secure',
-      name: 'secure',
-      component: () => import('./views/Secure.vue'),
+      path: '/stores',
+      name: 'stores',
+      component: () => import('./views/Stores.vue'),
       meta: {
         requiresAuth: true,
       },
