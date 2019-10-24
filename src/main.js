@@ -5,8 +5,10 @@ import store from './store';
 import vuetify from './plugins/vuetify';
 import axios from 'axios';
 
+axios.defaults.baseURL = 'http://localhost:5000/';
 Vue.prototype.$axios = axios;
 const token = localStorage.getItem('token');
+
 if (token) {
   Vue.prototype.$axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 }

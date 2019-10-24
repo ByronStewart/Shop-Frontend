@@ -9,7 +9,7 @@
     >
       <template v-slot:header>
         <v-toolbar class="mb-2">
-          <v-text-field v-model="search" clearable flat hide-details label="Search"></v-text-field>
+          <v-text-field ref="search" v-model="search" clearable flat hide-details label="Search"></v-text-field>
         </v-toolbar>
       </template>
       <template v-slot:default="props">
@@ -25,7 +25,9 @@
                 </v-col>
               </v-row>
             </v-expansion-panel-header>
-            <v-expansion-panel-content class="mt-4">{{item.description}}</v-expansion-panel-content>
+            <v-expansion-panel-content>
+              <div class="pt-4">{{item.description}}</div>
+            </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
       </template>
@@ -54,6 +56,9 @@ export default {
     } catch (err) {
       console.log(err.response);
     }
+  },
+  mounted() {
+    this.$refs.search.focus();
   },
   methods: {
     gotoStorePage(id) {

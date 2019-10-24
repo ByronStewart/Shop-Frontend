@@ -3,7 +3,12 @@
     <v-card-title>Register</v-card-title>
     <v-card-text>
       <v-form @submit.prevent="registerUser">
-        <v-text-field prepend-icon="mdi-account-circle" v-model="username" label="Username"></v-text-field>
+        <v-text-field
+          ref="username"
+          prepend-icon="mdi-account-circle"
+          v-model="username"
+          label="Username"
+        ></v-text-field>
         <v-text-field type="email" prepend-icon="mdi-mail" v-model="email" label="Email"></v-text-field>
         <v-text-field type="password" prepend-icon="mdi-lock" v-model="password" label="Password"></v-text-field>
         <v-card-actions>
@@ -26,6 +31,9 @@ export default {
       password: ""
     };
   },
+  mounted() {
+    this.$refs.username.focus();
+  },
   methods: {
     async registerUser() {
       const data = {
@@ -35,7 +43,7 @@ export default {
       };
       try {
         const response = await this.$store.dispatch("register", data);
-        this.$router.push('/login')
+        this.$router.push("/login");
         console.log(response);
       } catch (err) {
         console.log(err);

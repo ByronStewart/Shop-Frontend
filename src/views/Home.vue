@@ -1,9 +1,13 @@
 <template>
-  <h1>Hello Friends</h1>
+  <shopping-cart></shopping-cart>
 </template>
 
 <script>
+import shoppingCart from "../components/shoppingCart";
+
 export default {
-  components: {}
+  components: {
+    shoppingCart
+  }
 };
 </script>

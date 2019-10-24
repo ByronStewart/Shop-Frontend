@@ -9,7 +9,7 @@
       </v-card-text>
       <v-card-actions>
         <v-btn>Visit Store</v-btn>
-        <v-btn>Add to cart</v-btn>
+        <v-btn @click="addToCart">Add to cart</v-btn>
       </v-card-actions>
     </v-card>
   </v-container>
@@ -46,6 +46,9 @@ export default {
     next() {
       const nextPage = parseInt(this.$route.params.id) + 1;
       this.$router.push(`/product/${nextPage}`);
+    },
+    addToCart() {
+      this.$store.dispatch("shoppingCart/addItem", this.product);
     }
   }
 };

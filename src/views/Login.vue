@@ -3,7 +3,14 @@
     <v-card-title>Login</v-card-title>
     <v-card-text>
       <v-form @submit.prevent="loginUser">
-        <v-text-field type="email" required prepend-icon="mdi-mail" v-model="email" label="Email"></v-text-field>
+        <v-text-field
+          ref="email"
+          type="email"
+          required
+          prepend-icon="mdi-mail"
+          v-model="email"
+          label="Email"
+        ></v-text-field>
         <v-text-field type="password" prepend-icon="mdi-lock" v-model="password" label="Password"></v-text-field>
         <v-card-actions>
           <v-btn type="submit" color="info">Login</v-btn>
@@ -23,6 +30,9 @@ export default {
       email: "",
       password: ""
     };
+  },
+  mounted() {
+    this.$refs.email.focus();
   },
   methods: {
     async loginUser() {
